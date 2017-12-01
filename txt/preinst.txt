@@ -1,0 +1,23 @@
+**** BEFORE WE BEGIN ****
+
+This compilation process requires the following things to be done prior to compiling.
+
+- First of all, Go must be installed
+- On Windows you must make sure the Go compiler can be reached through
+  the PATH environment variable. On unix based systems such as Mac and
+  Linux this should have been done by default.
+- Make sure the directory this source is in located in a folder reachable
+  through the GOPATH environment
+- On unix systems this variable is not exported by this script. Do it
+  yourself prior to running it.
+- Make sure this repository is cloned into an src/trickyunits from
+  the GOPATH https://github.com/Tricky1975/trickyunits_go
+  Don't use "GO GET" for that, but "GIT CLONE".
+- From GitHub you'll also need itchio/lzma, you can just "GO GET" 
+  that repo. If you do not want that just put "//" before
+  "trickyunits/jcr6/jcr6lzma" line in the genimps.go file
+- From Github you'll also need ulikunitz/xz. you can just "GO GET"
+  that repo. If you don't want that just put "//" before
+  "trickyunits/jcr6/jcr6xz" in the genimps.go file
+
+Be sure you got all this in order, or the compiling will fail
