@@ -30,7 +30,9 @@ import(
 	"jcr6cli/src/imps/ver"
 _	"jcr6cli/src/imps/drv"
 	"fmt"
+	"os"
 	"trickyunits/mkl"
+	"trickyunits/ansistring"
 )
 
 func init(){
@@ -40,5 +42,10 @@ mkl.Lic    ("JCR6 CLI (GO) - jcr6list.go","GNU General Public License 3")
 
 func main(){
 	ver.CHVER()
-	fmt.Printf("Not functional yet, but that will soon come, I guess ;)\n\n")
+	fmt.Printf("Not fully functional yet, but that will soon come, I guess ;)\n\n")
+	if len(os.Args)<2{
+		fmt.Print(ansistring.SCol("Usage:",ansistring.A_Cyan,0),ansistring.SCol("jcr6 list ",ansistring.A_Yellow,0),ansistring.SCol("<JCR6 Resource File>",ansistring.A_Magenta,0),"\n")
+		os.Exit(0)
+	}
+	
 }
