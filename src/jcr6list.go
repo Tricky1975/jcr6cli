@@ -31,9 +31,17 @@ import(
 _	"jcr6cli/src/imps/drv"
 	"fmt"
 	"os"
+	"sort"
+	"math"
 	"trickyunits/mkl"
 	"trickyunits/ansistring"
+	"trickyunits/qstr"
+	"trickyunits/jcr6/jcr6main"
 )
+
+const A_Magenta=ansistring.A_Magenta
+const A_Cyan   =ansistring.A_Cyan
+const A_Yellow =ansistring.A_Yellow
 
 func init(){
 mkl.Version("JCR6 CLI (GO) - jcr6list.go","17.12.02")
@@ -47,5 +55,69 @@ func main(){
 		fmt.Print(ansistring.SCol("Usage:",ansistring.A_Cyan,0),ansistring.SCol("jcr6 list ",ansistring.A_Yellow,0),ansistring.SCol("<JCR6 Resource File>",ansistring.A_Magenta,0),"\n")
 		os.Exit(0)
 	}
-	
+	jcrfilename:=os.Args[1]
+	fmt.Printf("%s %s\n\n",ansistring.SCol("Reading:",A_Cyan,0),ansistring.SCol(jcrfilename,A_Magenta,0))
+	jcr:=jcr6main.Dir(jcrfilename)
+	if jcr6main.JCR6Error!="" {
+		fmt.Printf("%s\n%s",ansistring.SCol("ERROR",ansistring.A_Red,ansistring.A_Blink),ansistring.SCol(jcr6main.JCR6Error,ansistring.A_Yellow,0))
+		os.Exit(20)
+	}
+	// Main files analysis
+	maincodes := make(map[string] string)
+	maintypes := make(map[string] string)
+	jent:=jcr6main.EntryList(jcr)
+	for i:=0;i<len(jent);i++{
+		mf:=jcr6main.Entry(jcr,jent[i]).Mainfile
+		c:=qstr.Left(qstr.StripAll(mf)+"________",8)
+		maincodes [mf] = c
+		maintypes [mf] = jcr6main.Recognize(mf)
+	}
+	mainorder := make([]string,len(maincodes))
+	mci := 0
+	for k,_ := range maincodes{
+		mainorder[mci]=k
+		mci++
+	}
+	sort.Strings(mainorder)
+	fmt.Println(ansistring.SCol("MainCode  Type            Main File",A_Cyan,0))
+	fmt.Println(ansistring.SCol("========  ==============  =========",A_Yellow,0))
+	for i:=0;i<len(mainorder);i++{
+		fn:=mainorder[i]
+		fmt.Print  (ansistring.SCol(maincodes[fn]+"  ",1,0))
+		fmt.Print  (ansistring.SCol(qstr.Left(maintypes[fn]+"                     ",14)+"  ",2,0))
+		fmt.Println(ansistring.SCol(fn,7,0))
+	}
+	fmt.Print(ansistring.SCol("\tThis resource has ",A_Yellow,0),ansistring.SCol(fmt.Sprintf("%d",len(mainorder)),A_Cyan,0))
+	if len(mainorder)==1{
+		fmt.Println(ansistring.SCol(" main file\n",A_Yellow,0))
+	} else {
+		fmt.Println(ansistring.SCol(" main files\n",A_Yellow,0))
+	}
+	// Entry list
+	fmt.Println(ansistring.SCol(" Real Size Comp. Size Ratio   Offset MainCode    Storage Entry",A_Cyan,0))
+	fmt.Println(ansistring.SCol("========== ========== ===== ======== ======== ========== =====",A_Yellow,0))
+	for i:=0;i<len(jent);i++{
+		e:=jcr6main.Entry(jcr,jent[i])
+		fmt.Print(ansistring.SCol(qstr.Right(fmt.Sprintf("          %d",e.Size),10),1,0)," ")
+		fmt.Print(ansistring.SCol(qstr.Right(fmt.Sprintf("          %d",e.Compressedsize),10),2,0)," ")
+		ratio:=0
+		if e.Size>0 {
+			deel    := float64(e.Compressedsize)
+			geheel  := float64(e.Size)
+			procent := (deel/geheel)*100
+			ratio   = int( math.Floor(procent + .5) )
+		}
+		fmt.Print(ansistring.SCol(qstr.Right(fmt.Sprintf("    %d%s",ratio,"%"),5),3,0)," ")
+		fmt.Print(ansistring.SCol(qstr.Right(fmt.Sprintf("        %X",e.Offset),8),4,0)," ")
+		fmt.Print(ansistring.SCol(maincodes[e.Mainfile],5,0)," ")
+		fmt.Print(ansistring.SCol(qstr.Left(e.Storage+"               ",10),6,0)," ")
+		fmt.Println(ansistring.SCol(e.Entry,7,0))
+	}
+	fmt.Print(ansistring.SCol("\tThis resource has ",A_Yellow,0),ansistring.SCol(fmt.Sprintf("%d",len(jent)),A_Cyan,0))
+	if len(jent)==1{
+		fmt.Println(ansistring.SCol(" entry\n",A_Yellow,0))
+	} else {
+		fmt.Println(ansistring.SCol(" entries\n",A_Yellow,0))
+	}
+
 }
