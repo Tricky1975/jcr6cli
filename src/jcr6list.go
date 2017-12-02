@@ -20,19 +20,25 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.01
+Version: 17.12.02
 */
 package main
 
 
 
 import(
-_	"jcr6cli/src/imps/ver"
+	"jcr6cli/src/imps/ver"
 _	"jcr6cli/src/imps/drv"
 	"fmt"
+	"trickyunits/mkl"
 )
 
+func init(){
+mkl.Version("JCR6 CLI (GO) - jcr6list.go","17.12.02")
+mkl.Lic    ("JCR6 CLI (GO) - jcr6list.go","GNU General Public License 3")
+}
 
 func main(){
+	ver.CHVER()
 	fmt.Printf("Not functional yet, but that will soon come, I guess ;)\n\n")
 }
