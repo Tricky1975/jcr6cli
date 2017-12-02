@@ -110,7 +110,7 @@ func main(){
 		fmt.Print(ansistring.SCol(qstr.Right(fmt.Sprintf("    %d%s",ratio,"%"),5),3,0)," ")
 		fmt.Print(ansistring.SCol(qstr.Right(fmt.Sprintf("        %X",e.Offset),8),4,0)," ")
 		fmt.Print(ansistring.SCol(maincodes[e.Mainfile],5,0)," ")
-		fmt.Print(ansistring.SCol(qstr.Left(e.Storage+"               ",10),6,0)," ")
+		fmt.Print(ansistring.SCol(qstr.Right("               "+e.Storage,10),6,0)," ")
 		fmt.Println(ansistring.SCol(e.Entry,7,0))
 	}
 	fmt.Print(ansistring.SCol("\tThis resource has ",A_Yellow,0),ansistring.SCol(fmt.Sprintf("%d",len(jent)),A_Cyan,0))
