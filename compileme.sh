@@ -5,13 +5,13 @@ case "$response" in
     [yY][eE][sS]|[yY]) 
         mkdir -p bin
         echo Compiling
-#        go build -o bin/jcr6 src/jcr6.go
-#        go build -o bin/jcr6_add src/jcr6add.go
-#        go build -o bin/jcr6_delete src/jcr6delete.go
-        go build -o bin/jcr6_list src/jcr6list.go
-#        go build -o bin/jcr6_type src/jcr6type.go
-#        go build -o bin/jcr6_extract src/jcr6extract.go
-#        go build -o bin/jcr6_convert src/jcr6convert.go
+#       echo = Main; go build -o bin/jcr6 src/jcr6.go
+#       echo = Add;  go build -o bin/jcr6_add src/jcr6add.go
+#       echo = Delete;  go build -o bin/jcr6_delete src/jcr6delete.go
+        echo = List; go build -o bin/jcr6_list src/jcr6list.go
+#       echo = Type; go build -o bin/jcr6_type src/jcr6type.go
+#       echo = Extract; go build -o bin/jcr6_extract src/jcr6extract.go
+#       echo = Convert; go build -o bin/jcr6_convert src/jcr6convert.go
        echo "Ready!"
 
         ;;
