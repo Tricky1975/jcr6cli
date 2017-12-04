@@ -94,12 +94,12 @@ func main(){
 		mci++
 	}
 	sort.Strings(mainorder)
-	fmt.Println(ansistring.SCol("MainCode  Type            Entries  Main File",A_Cyan,0))
-	fmt.Println(ansistring.SCol("========  ==============  =======  =========",A_Yellow,0))
+	fmt.Println(ansistring.SCol("MainCode  Type                  Entries  Main File",A_Cyan,0))
+	fmt.Println(ansistring.SCol("========  ====================  =======  =========",A_Yellow,0))
 	for i:=0;i<len(mainorder);i++{
 		fn:=mainorder[i]
 		fmt.Print  (ansistring.SCol(maincodes[fn]+"  ",1,0))
-		fmt.Print  (ansistring.SCol(qstr.Left(maintypes[fn]+"                     ",14)+"  ",2,0))
+		fmt.Print  (ansistring.SCol(qstr.Left(jcr6main.JCR6Drivers[maintypes[fn]].Drvname+"                           ",20)+"  ",2,0))
 		fmt.Print  (ansistring.SCol(qstr.Right(fmt.Sprintf("       %d",maincount[fn]),7),3,0)+"  ")
 		fmt.Println(ansistring.SCol(fn,7,0))
 	}
