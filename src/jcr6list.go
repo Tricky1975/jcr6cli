@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.03
+Version: 17.12.04
 */
 package main
 
@@ -44,7 +44,7 @@ const A_Cyan   =ansistring.A_Cyan
 const A_Yellow =ansistring.A_Yellow
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6list.go","17.12.03")
+mkl.Version("JCR6 CLI (GO) - jcr6list.go","17.12.04")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6list.go","GNU General Public License 3")
 }
 
@@ -59,7 +59,7 @@ func main(){
 	fmt.Printf("%s %s\n\n",ansistring.SCol("Reading:",A_Cyan,0),ansistring.SCol(jcrfilename,A_Magenta,0))
 	jcr:=jcr6main.Dir(jcrfilename)
 	if jcr6main.JCR6Error!="" {
-		fmt.Printf("%s\n%s",ansistring.SCol("ERROR",ansistring.A_Red,ansistring.A_Blink),ansistring.SCol(jcr6main.JCR6Error,ansistring.A_Yellow,0))
+		fmt.Printf("%s\n%s\n",ansistring.SCol("ERROR",ansistring.A_Red,ansistring.A_Blink),ansistring.SCol(jcr6main.JCR6Error,ansistring.A_Yellow,0))
 		os.Exit(20)
 	}
 	// Comments

@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.02
+Version: 17.12.04
 */
 package drv
 import(
@@ -30,4 +30,5 @@ import(
 //	_ "trickyunits/jcr6/jcr6xz"
 	// file formats
 	_ "trickyunits/jcr6/jcr6realdir"
+	_ "trickyunits/jcr6/jcr6wad"
 )	
