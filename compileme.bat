@@ -1,5 +1,6 @@
+echo off
 cls
-type txt/preinst.txt
+type txt\preinst.txt
 echo "If you are not ready to go press ctrl-C and say "yes" if Windows asks to terminate the batch job."
 pause
 echo Do not mind the error if the the directory already exists
