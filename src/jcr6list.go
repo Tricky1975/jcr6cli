@@ -99,7 +99,13 @@ func main(){
 	for i:=0;i<len(mainorder);i++{
 		fn:=mainorder[i]
 		fmt.Print  (ansistring.SCol(maincodes[fn]+"  ",1,0))
-		fmt.Print  (ansistring.SCol(qstr.Left(jcr6main.JCR6Drivers[maintypes[fn]].Drvname+"                           ",20)+"  ",2,0))
+		if maintypes[fn]=="NONE" {
+			for i2:=0;i2<22;i2++{
+				fmt.Print(" ")
+			}
+		} else {
+			fmt.Print  (ansistring.SCol(qstr.Left(jcr6main.JCR6Drivers[maintypes[fn]].Drvname+"                           ",20)+"  ",2,0))
+		}
 		fmt.Print  (ansistring.SCol(qstr.Right(fmt.Sprintf("       %d",maincount[fn]),7),3,0)+"  ")
 		fmt.Println(ansistring.SCol(fn,7,0))
 	}
