@@ -11,7 +11,7 @@ case "$response" in
         echo = List; go build -o bin/jcr6_list src/jcr6list.go
         echo = Type; go build -o bin/jcr6_type src/jcr6type.go
 #       echo = Extract; go build -o bin/jcr6_extract src/jcr6extract.go
-        echo = Convert; go build -o bin/jcr6_convert src/jcr6convert.go
+        echo = Convert; go build -o bin/jcr6_convert jcr6cli/src/jcr6convert
        echo "Ready!"
 
         ;;

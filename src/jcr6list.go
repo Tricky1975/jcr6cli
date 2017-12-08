@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.04
+Version: 17.12.08
 */
 package main
 
@@ -44,7 +44,7 @@ const A_Cyan   =ansistring.A_Cyan
 const A_Yellow =ansistring.A_Yellow
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6list.go","17.12.04")
+mkl.Version("JCR6 CLI (GO) - jcr6list.go","17.12.08")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6list.go","GNU General Public License 3")
 }
 

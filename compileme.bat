@@ -15,5 +15,5 @@ rem        go build -o bin/jcr6_delete.exe src/jcr6delete.go
         go build -o bin/jcr6_type.exe src/jcr6type.go
 rem        go build -o bin/jcr6_extract.exe src/jcr6extract.go
         echo = Convert
-        go build -o bin/jcr6_convert.exe src/jcr6convert.go
+        go build -o bin/jcr6_convert.exe jcr6cli/src/jcr6convert
        echo "Ready!"
