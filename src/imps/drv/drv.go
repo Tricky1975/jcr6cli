@@ -26,8 +26,9 @@ package drv
 import(
 	// compression
 	_ "trickyunits/jcr6/jcr6zlib"
-//	_ "trickyunits/jcr6/jcr6lzma"
+	_ "trickyunits/jcr6/jcr6lzma"
 //	_ "trickyunits/jcr6/jcr6xz"
+
 	// file formats
 	_ "trickyunits/jcr6/jcr6realdir"
 	_ "trickyunits/jcr6/jcr6wad"
