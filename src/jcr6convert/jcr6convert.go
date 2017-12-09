@@ -91,7 +91,7 @@ func NewSessionDir() (string,string,int) {
 		n++
 		ret=swapdir+fmt.Sprintf("/SESSION%d",n)
 		retver=verdir+fmt.Sprintf("/SESSION%d",n)
-		fmt.Println("Sessiondir: "+ret)
+		//fmt.Println("Sessiondir: "+ret)
 		if (!qff.IsDir(ret)) && (!qff.Exists(ret)) && (!qff.IsDir(retver)) && (!qff.Exists(retver)) {
 			return ret,retver,n
 		}
