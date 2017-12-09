@@ -20,13 +20,13 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.08
+Version: 17.12.09
 */
 package main
 
 import "os/exec"
-import "trickyunits/qstr"
-import "path/filepath"
+//import "trickyunits/qstr"
+//import "path/filepath"
 import "os"
 import "trickyunits/ansistring"
 import "fmt"
@@ -58,22 +58,26 @@ func AltCommand(shit []string) *exec.Cmd {
 		Path: shit[0],
 		Args: shit,
 	}
+	/*
 	if qstr.Left(cmd.Path,5)=="jcr6_" {
 		cmd.Path = filepath.Dir(os.Args[0])+"/"+cmd.Path
 	} else {
+	*/ 
 		if lp,err:=exec.LookPath(cmd.Path); err!= nil {
 			fmt.Println(ansistring.SCol("ERROR!",ansistring.A_Red,ansistring.A_Blink)+"\n"+ansistring.SCol(err.Error(),ansistring.A_Yellow,0))
 			os.Exit(50)
 		} else {
 			cmd.Path = lp
 		}
-	}
+	//}
 	return cmd
 }
 
 func DoIt(shit []string) {
 	cmd:=AltCommand(shit)
-	err := cmd.Run()
+	o,err := cmd.Output()
+	outputstring:=fmt.Sprintf("%s",o)
+	fmt.Println(outputstring)
 	if err!=nil{
 		fmt.Println(ansistring.SCol("EXECUTION ERROR!",ansistring.A_Red,ansistring.A_Blink)+"\n"+ansistring.SCol(err.Error(),ansistring.A_Yellow,0))
 		os.Exit(51)
@@ -81,6 +85,6 @@ func DoIt(shit []string) {
 }
 
 func AC_Vers(){
-mkl.Version("JCR6 CLI (GO) - alt_command.go","17.12.08")
+mkl.Version("JCR6 CLI (GO) - alt_command.go","17.12.09")
 mkl.Lic    ("JCR6 CLI (GO) - alt_command.go","GNU General Public License 3")
 }
