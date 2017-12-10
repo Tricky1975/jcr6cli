@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.09
+Version: 17.12.10
 */
 package main
 
@@ -64,12 +64,13 @@ var brew = map[string] string{}
 const suffix=""
 
 func initpack(){
-	macpacks["jcr"] = &tpack{ packexecutable:"jcr6_add",  unpackexecutable:"jcr6_extract", packcommand:"jcr6_add %s",       unpackcommand:"jcr6_extract %s -y"}
+	macpacks["jcr"] = &tpack{ packexecutable:"jcr6_add",  unpackexecutable:"jcr6_extract", packcommand:"jcr6_add %s",       unpackcommand:"jcr6_extract -y %s"}
 	macpacks["7z" ] = &tpack{ packexecutable:"7z",        unpackexecutable:"7z",           packcommand:"7z a %s *",         unpackcommand:"7z x %s *"}
 	macpacks["zip"] = &tpack{ packexecutable:"zip",       unpackexecutable:"unzip",        packcommand:"zip -9 -r %s *",    unpackcommand:"unzip %s" }
-	macpacks["tar"] = &tpack{ packexecutable:"7z",        unpackexecutable:"jcr6_extract", packcommand:"7z a -ttar %s *",   unpackcommand:"jcr6_extract %s -y"}
+	macpacks["tar"] = &tpack{ packexecutable:"7z",        unpackexecutable:"jcr6_extract", packcommand:"7z a -ttar %s *",   unpackcommand:"jcr6_extract -y %s"}
 	macpacks["arj"] = &tpack{ packexecutable:"",          unpackexecutable:"7z",           packcommand:"",                  unpackcommand:"7z x %s *"}
 	macpacks["rar"] = &tpack{ packexecutable:"rar",       unpackexecutable:"rar",          packcommand:"rar a -r -m5 %s *", unpackcommand:"rar x %s *"}
+	macpacks["wad"] = &tpack{ packexecutable:"",          unpackexecutable:"jcr6_extract", packcommand:"",                  unpackcommand:"jcr6_extract -y %s"}
 	
 	// lha
 	macpacks["lha"] = &tpack{ packexecutable:"lha", unpackexecutable:"lha",      packcommand:"lha a %s *",      unpackcommand:"lha x %s *"}
@@ -79,7 +80,7 @@ func initpack(){
 	brew["7z"] = "p7zip"
 	brew["lha"] = "lha"
 	
-mkl.Version("JCR6 CLI (GO) - packtools_darwin.go","17.12.09")
+mkl.Version("JCR6 CLI (GO) - packtools_darwin.go","17.12.10")
 mkl.Lic    ("JCR6 CLI (GO) - packtools_darwin.go","GNU General Public License 3")
 }
 
