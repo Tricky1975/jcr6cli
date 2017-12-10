@@ -303,7 +303,7 @@ func main(){
 		}
 	}
 	fmt.Println(ansistring.SCol("\n\nCleaning up verification swap",Cyan,0))
-	if err:=os.RemoveAll(sessiondir);err!=nil{
+	if err:=os.RemoveAll(verifydir);err!=nil{
 		fmt.Println(ansistring.SCol("ERROR!",Red,Blink))
 		fmt.Println(ansistring.SCol("I could not delete: "+sessiondir,Yellow,0))
 		fmt.Println(ansistring.SCol(err.Error(),Blue,ansistring.A_Bright))
