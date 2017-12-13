@@ -7,7 +7,8 @@ echo Do not mind the error if the the directory already exists
 md bin
         echo Compiling
 rem        go build -o bin/jcr6.exe src/jcr6.go
-rem        go build -o bin/jcr6_add.exe src/jcr6add.go
+        echo = Build
+        go build -o bin/jcr6_add.exe src/jcr6add.go
 rem        go build -o bin/jcr6_delete.exe src/jcr6delete.go
         echo = List
         go build -o bin/jcr6_list.exe src/jcr6list.go

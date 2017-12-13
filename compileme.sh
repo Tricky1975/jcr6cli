@@ -6,7 +6,7 @@ case "$response" in
         mkdir -p bin
         echo Compiling
 #       echo = Main; go build -o bin/jcr6 src/jcr6.go
-#       echo = Add;  go build -o bin/jcr6_add src/jcr6add.go
+        echo = Add;  go build -o bin/jcr6_add src/jcr6add.go
 #       echo = Delete;  go build -o bin/jcr6_delete src/jcr6delete.go
         echo = List; go build -o bin/jcr6_list src/jcr6list.go
         echo = Type; go build -o bin/jcr6_type src/jcr6type.go
