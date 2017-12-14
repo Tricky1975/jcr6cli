@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.13
+Version: 17.12.14
 */
 package main
 
@@ -89,7 +89,7 @@ func plural(number int,nounsingle,nounplural string) string{
 }
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6add.go","17.12.13")
+mkl.Version("JCR6 CLI (GO) - jcr6add.go","17.12.14")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6add.go","GNU General Public License 3")
 }
 
