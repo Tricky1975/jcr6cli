@@ -59,6 +59,17 @@ function Add(src,tgt,data)
 	JCR_Add(src,tgt)
 end
 
+function AddImport(dependency,sig)
+	value = dependency
+	if sig then value = value .. ";" .. sig end
+	Output("IMPORT:"+value)
+end
+
+function AddRequire(dependency,sig)
+	value = dependency
+	if sig then value = value .. ";" .. sig end
+	Output("REQUIRE:"+value)
+end
 
 
 --[[
