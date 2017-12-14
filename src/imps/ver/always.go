@@ -6,6 +6,15 @@ import(
 	"trickyunits/qstr"
 	"trickyunits/mkl"
 )
+
+
+func WANTVER() bool {
+	if len(os.Args)>1{
+		return os.Args[1]==jvstring || os.Args[1]==fvstring
+	}
+	return false
+}
+
 func CHVER(){
 	if len(os.Args)>1{
 		if os.Args[1]==jvstring || os.Args[1]==fvstring{
