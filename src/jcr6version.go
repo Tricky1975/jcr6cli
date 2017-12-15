@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.15
+Version: 17.12.16
 */
 package main
 
@@ -50,7 +50,7 @@ const Magenta = ansistring.A_Magenta
 
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6version.go","17.12.15")
+mkl.Version("JCR6 CLI (GO) - jcr6version.go","17.12.16")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6version.go","GNU General Public License 3")
 }
 
@@ -70,9 +70,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for _, file := range files {
+	for _, ifile := range files {
 		//fmt.Println(file.Name()) // debug
-		file:=file.Name()
+		file:=ifile.Name()
 		//fmt.Println("Looing at: "+file) // debug
 		if qstr.Left(file,4)=="jcr6" && qstr.Right(file,4)!=".lua" && path.Ext(file)==npext {
 			cmd:=exec.Command(dir+"/"+file+ext,teken+param+teken)
