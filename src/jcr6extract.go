@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.10
+Version: 17.12.16
 */
 package main
 
@@ -56,7 +56,7 @@ const Blink  = ansistring.A_Blink
 const Bright = ansistring.A_Bright
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6extract.go","17.12.10")
+mkl.Version("JCR6 CLI (GO) - jcr6extract.go","17.12.16")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6extract.go","GNU General Public License 3")
 }
 
@@ -115,6 +115,7 @@ func failed(fmsg string) {
 func main() {
 	ver.CHVER()
 	// Init flags
+	flag.CommandLine.SetOutput(os.Stdout)
 	ansiyes:="yes"
 	if !ansistring.ANSI_Use {ansiyes="no"}
 	fl_odir:=flag.String("o" ,qff.PWD(),"Directory to extract the content of the JCR6 file to")

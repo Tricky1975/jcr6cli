@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.10
+Version: 17.12.16
 */
 package main
 
@@ -129,6 +129,7 @@ func main(){
 	// Version show if asked
 	ver.CHVER()
 	// Flags
+	flag.CommandLine.SetOutput(os.Stdout)
 	inputfile := flag.String("i","","File to be converted (required)")
 	outputfile := flag.String("o","","Output file. When not set it will be generated out of the -i tag. Don't use extensions. They will be added automatically!")
 	convertto := flag.String("t","jcr","Convert to format. Multiple targets possible, separate with semicolons and put the targets between quotes!")

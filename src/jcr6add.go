@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.15
+Version: 17.12.16
 */
 package main
 
@@ -89,7 +89,7 @@ func plural(number int,nounsingle,nounplural string) string{
 }
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6add.go","17.12.15")
+mkl.Version("JCR6 CLI (GO) - jcr6add.go","17.12.16")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6add.go","GNU General Public License 3")
 }
 
@@ -277,6 +277,7 @@ func main(){
 	ver.CHVER()
 	ansiyes:="yes"
 	if !ansistring.ANSI_Use {ansiyes="no"}
+	flag.CommandLine.SetOutput(os.Stdout)
 	fl_idir:=flag.String("i" ,qff.PWD(),"Directory to add files from (this works RECURSIVELY -- always)")
 	fl_pref:=flag.String("pr",  ""   ,"Only add files prefixed with the given value.")
 	fl_suff:=flag.String("sf",  ""   ,"Only add files suffixed with the given value.")
