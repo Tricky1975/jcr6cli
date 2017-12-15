@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.14
+Version: 17.12.15
 ]]
 
 
@@ -62,15 +62,26 @@ end
 function AddImport(dependency,sig)
 	value = dependency
 	if sig then value = value .. ";" .. sig end
-	Output("IMPORT:"+value)
+	Output("IMPORT:"..value)
 end
 
 function AddRequire(dependency,sig)
 	value = dependency
 	if sig then value = value .. ";" .. sig end
-	Output("REQUIRE:"+value)
+	Output("REQUIRE:"..value)
 end
 
+function AddComment(name,cmt)
+	Output(name..":"..cmt)
+end
+
+function JCR6MergeSkipPrefix(prefix)
+	Output("JCRSKIPPREFIX:"..prefix)
+end
+
+function Sig(sig)
+	Output("SIGNATURE:"..sig)
+end
 
 --[[
 	This table is created to replace the original BlitzMax library.
@@ -79,8 +90,31 @@ end
 ]]
 JLS = {
 	SetJCR6OutputFile = SetJCR6OutputFile,
-	Output = Output
+	Output = JCR_Output,
+	FType = filetype
 }
+Output = JCR_Output
+
+function fileexists(file)
+	return JLS.FType(file)~=0
+end 
+
+function isfile(file)
+	return JLS.FType(file)==1
+end
+
+function isdir(file)
+	return JLS.FType(file)==2
+end
+
+function GetDir(path)
+	--print("test")
+	local ggetdir,e = load(JCR_GetDir(path))
+	if not ggetdir then print("ERROR: ") print(e) end
+	--print(type(ggetdir))
+	return ggetdir()
+end getdir = GetDir
+
 
 
 
@@ -94,7 +128,7 @@ function mkl.lic(a,b)
 	JCRMKL("LIC",a,b)
 end
 
-mkl.version("JCR6 CLI (GO) - jcr6script.lua","17.12.14")
+mkl.version("JCR6 CLI (GO) - jcr6script.lua","17.12.15")
 mkl.lic    ("JCR6 CLI (GO) - jcr6script.lua","GNU General Public License 3")
 
 

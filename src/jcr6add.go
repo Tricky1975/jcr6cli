@@ -441,13 +441,19 @@ func main(){
 		fmt.Print(ansistring.SCol(" => ",Yellow,0))
 		fmt.Print(ansistring.SCol(alias,Green,0))
 		fmt.Print(ansistring.SCol(" ... ",Cyan,0))
-		jc.AliasFile(from,alias)
-		e:=jcr6main.JCR6Error
-		if e=="" {
-			fmt.Println(ansistring.SCol("Done",7,Bright))
+		centryname:=strings.ToUpper(from)
+		if _,ok:=jc.Entries[strings.ToUpper(centryname)] ; ok {
+			jc.AliasFile(from,alias)
+			e:=jcr6main.JCR6Error
+			if e=="" {
+				fmt.Println(ansistring.SCol("Done",7,Bright))
+			} else {
+				fmt.Println(ansistring.SCol("Failed",Red,0))
+				ERR(e)
+			}
 		} else {
-			fmt.Println(ansistring.SCol("Failed",Red,0))
-			ERR(e)
+			fmt.Println(ansistring.SCol("Failed -- No original",Red,0))
+			counterrors++
 		}
 	}
 	

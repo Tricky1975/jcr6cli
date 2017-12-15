@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.14
+Version: 17.12.15
 */
 package main
 
@@ -30,6 +30,7 @@ import (
 	"os"
 	"log"
 	"fmt"
+	"io/ioutil"
 	"strings"
 	"runtime"
 	"os/exec"
@@ -182,6 +183,34 @@ func API_MKL(l * lua.State) int {
 	return 0
 }
 
+func API_FileType(l * lua.State) int {
+	ret:=0
+	file:=lua.CheckString(l,1)
+	if qff.Exists(file) {
+		ret=1
+		if qff.IsDir(file) { ret=2 }
+	}
+	l.PushInteger(ret)
+	return 1
+}
+
+func API_GetDir(l * lua.State) int {
+	ret:="ret = {}\n"
+	dir:=lua.CheckString(l,1)
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		
+	} else {
+		for _, file := range files {
+			ret += "\tret[#ret+1]=\""+file.Name()+"\"\n"
+		}
+	}
+	ret += "\n\n\nreturn ret"
+	l.PushString(ret)
+	return 1
+
+}
+
 func SysError(l *lua.State) int {
 	ERR(lua.CheckString(l,1),!l.IsNoneOrNil(2))
 	return 0
@@ -256,11 +285,13 @@ func init(){
 		                                         {"Alias",API_Alias},
 		                                         {"SetJCR6OutputFile",API_SetJCR6OutputFile},
 		                                         {"JIF",API_JIF},
-		                                         {"Output",API_Output},
+		                                         {"JCR_Output",API_Output},
 		                                         {"JCRMKL",API_MKL},
+		                                         {"filetype",API_FileType},
+		                                         {"JCR_GetDir",API_GetDir},
 		                                       },0 )
 	lua.AtPanic(sl,PANIEK)
-mkl.Version("JCR6 CLI (GO) - jcr6script.go","17.12.14")
+mkl.Version("JCR6 CLI (GO) - jcr6script.go","17.12.15")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6script.go","GNU General Public License 3")
 }
 
@@ -282,7 +313,7 @@ func main(){
 	jcrfile  = qstr.StripExt(slua)+".jcr"
 	JIF_File = qstr.StripExt(slua)+".jif"
 	alua := "Args = {}\n"
-	for i:=1;i<len(os.Args);i++ { alua += "Args[#Args+1]=\"" + strings.Replace(os.Args[i],"\"","\\\"",-10) + "\"\n" }
+	for i:=1;i<len(os.Args);i++ { alua += "Args[#Args+1]=\"" + strings.Replace(os.Args[i],"\"","\\\"",-10) + "\"\nscriptargs=Args\n\n" }
 	svlua,svluaf,svluafsv := savedvars()
 	DoLuaString(alua,"Arguments definitions")
 	if svlua!="" { DoLuaString(svlua, svluaf) }
