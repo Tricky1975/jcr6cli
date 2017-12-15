@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.14
+Version: 17.12.15
 */
 package main
 
@@ -89,7 +89,7 @@ func plural(number int,nounsingle,nounplural string) string{
 }
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6add.go","17.12.14")
+mkl.Version("JCR6 CLI (GO) - jcr6add.go","17.12.15")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6add.go","GNU General Public License 3")
 }
 
@@ -431,6 +431,23 @@ func main(){
 				fmt.Println(ansistring.SCol(fmt.Sprintf("%s: Reduced to %d%s",storage,ratio,pteken),Green,Bright))
 				goed++
 			}
+		}
+	}
+	
+	// Alias requests
+	fmt.Println(ansistring.SCol("Processing aliases",Cyan,0))
+	for alias,from:=range list.alias{
+		fmt.Print(ansistring.SCol(from,Red,0))
+		fmt.Print(ansistring.SCol(" => ",Yellow,0))
+		fmt.Print(ansistring.SCol(alias,Green,0))
+		fmt.Print(ansistring.SCol(" ... ",Cyan,0))
+		jc.AliasFile(from,alias)
+		e:=jcr6main.JCR6Error
+		if e=="" {
+			fmt.Println(ansistring.SCol("Done",7,Bright))
+		} else {
+			fmt.Println(ansistring.SCol("Failed",Red,0))
+			ERR(e)
 		}
 	}
 	
