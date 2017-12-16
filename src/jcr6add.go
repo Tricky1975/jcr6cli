@@ -416,6 +416,37 @@ func main(){
 		if !qff.Exists(entry["!__FROMFILE"]){
 			fmt.Println(ansistring.SCol("FAILED",Red,0))
 			ERR("File not found!")
+		} else if ISJCR:=jcr6main.Recognize(entry["!__FROMFILE"]);ISJCR!="NONE" {
+			fmt.Println(ansistring.SCol("Merging: "+ISJCR,Magenta,0))
+			jdm:=jcr6main.Dir(entry["!__FROMFILE"])
+			if jcr6main.JCR6Error!="" {
+				ERR(jcr6main.JCR6Error)
+			} else {
+				for k,v :=range jdm.Comments { jc.AddComment(k,v); fmt.Println(ansistring.SCol("  = Comment: ",Cyan,0)+ansistring.SCol(k,Yellow,0)) }
+				for _,e :=range jdm.Entries  {
+					fmt.Print(ansistring.SCol("  = ",Red,Bright)+ansistring.SCol(e.Entry,Yellow,0)+ansistring.SCol(" ... ",Cyan,0))
+					tm:=int64(0)
+					if tmc,ok:=e.Dataint["__TIMESTAMP"];ok{ tm=int64(tmc) }
+					tgt:=entry["!__TARGET"]+"/"+e.Entry
+					//fmt.Print(tgt+" ") // debug
+					csize,storage:=jc.AddData(jcr6main.JCR_B(jdm,e.Entry),tgt,entry["!__STORAGE"],e.UnixPerm,tm,e.Author,e.Notes)
+					rsize:=e.Size
+					if jcr6main.JCR6Error!="" {
+						ERR(jcr6main.JCR6Error)
+					} else if storage=="Store" {
+						fmt.Println(ansistring.SCol("stored",ansistring.A_White,0))
+						goed++
+					} else {
+						deel    := float64(csize)
+						geheel  := float64(rsize)
+						procent := (deel/geheel)*100
+						ratio   := int( math.Floor(procent + .5) )
+						pteken:="%"
+						fmt.Println(ansistring.SCol(fmt.Sprintf("%s: Reduced to %d%s",storage,ratio,pteken),Green,Bright))
+						goed++
+					}
+				}
+			}
 		} else {
 			rsize,csize,storage:=jc.AddFile(entry["!__FROMFILE"],entry["!__TARGET"],entry["!__STORAGE"],entry["!__AUTHOR"],entry["!__NOTES"])
 			if jcr6main.JCR6Error!="" {
