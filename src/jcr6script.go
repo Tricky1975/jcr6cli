@@ -211,6 +211,11 @@ func API_GetDir(l * lua.State) int {
 
 }
 
+func API_GenVer(l * lua.State) int {
+	l.PushString(mkl.GenVer())
+	return 1
+}
+
 func SysError(l *lua.State) int {
 	ERR(lua.CheckString(l,1),!l.IsNoneOrNil(2))
 	return 0
@@ -289,6 +294,7 @@ func init(){
 		                                         {"JCRMKL",API_MKL},
 		                                         {"filetype",API_FileType},
 		                                         {"JCR_GetDir",API_GetDir},
+		                                         {"GenVer",API_GenVer},
 		                                       },0 )
 	lua.AtPanic(sl,PANIEK)
 mkl.Version("JCR6 CLI (GO) - jcr6script.go","17.12.15")
