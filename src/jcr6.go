@@ -33,7 +33,7 @@ import(
 	"path"
 	"runtime"
 	//"os/exec"
-	//"strings"
+	"strings"
 	
 	// Internal
 	"jcr6cli/src/imps/ver"
@@ -41,6 +41,7 @@ import(
 	// Tricky
 	"trickyunits/mkl"
 	"trickyunits/qstr"
+	//"trickyunits/qff"
 	"trickyunits/ansistring"
 	"trickyunits/shell"
 )
@@ -61,10 +62,15 @@ mkl.Lic    ("JCR6 CLI (GO) - jcr6.go","GNU General Public License 3")
 func main()																						{
 	ver.CHVER()
 	me,_:=os.Executable()
+	me=strings.Replace(me,"\\","/",-100)
 	dir:=path.Dir(me)
 	fmt.Println(ansistring.SCol("JCR6 - Command Line Tools!",Yellow,Bright))
 	fmt.Println(ansistring.SCol("Coded by: Jeroen P. Broks",Cyan,0))
 	fmt.Println(ansistring.SCol("(c) Jeroen P. Broks 2016-2017",Magenta,0))
+	fmt.Println()
+	fmt.Println(me,"\t",os.Args[0]) // debug line
+	fmt.Println("JCR6 installed in "+dir)
+	fmt.Println("JCR6 now running in "+runtime.GOOS)
 	fmt.Println()
 	if len(os.Args)>1 {
 		a:=[]string{}
@@ -88,10 +94,11 @@ func main()																						{
 		file:=ifile.Name()
 		//fmt.Println("Looing at: "+file) // debug
 		npext:=""
-		if runtime.GOOS=="windows" { npext="exe" }
+		if runtime.GOOS=="windows" { npext=".exe" }
 		if qstr.Left(file,5)=="jcr6_" && qstr.Right(file,4)!=".lua" && path.Ext(file)==npext {
 			fmt.Print(ansistring.SCol("= ",Red,Bright))
-			fmt.Println(ansistring.SCol(qstr.Right(file,len(file)-5),Yellow,0))
+			cmfile:=qstr.StripExt(file)
+			fmt.Println(ansistring.SCol(qstr.Right(cmfile,len(cmfile)-5),Yellow,0))
 		}
 	}
 	fmt.Println()

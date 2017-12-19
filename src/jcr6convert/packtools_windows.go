@@ -93,7 +93,7 @@ func checkpack(act,packer string){
 		want = winpacks[packer].packexecutable
 	}
 	if _,e := exec.LookPath(me+"/"+want);e!=nil {
-		fmt.Println("ERROR!\nIn order to "+a+" anyfile of the "+packer+"type I need the program "+want+" to be present in the same folder as where the jcr6 tools are installed which is currently not the case")
+		fmt.Println("ERROR!\nIn order to "+a+" anyfile of the "+packer+"type I need the program "+want+" to be present in one of the path folders")
 		os.Exit(2)
 	}
 }
