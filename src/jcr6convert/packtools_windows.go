@@ -33,7 +33,11 @@ package main
 import (
 	"path"
 	"os"
-	//"qff"
+	"os/exec"
+	"fmt"
+	"trickyunits/shell"
+	"trickyunits/qstr"
+	"trickyunits/mkl"
 	)
 
 type tpack struct{
@@ -49,14 +53,14 @@ var me = path.Base(os.Args[0])
 const suffix=".exe"
 
 func initpack(){
-	winpacks["jcr"] = { packexecutable:"jcr6_add.exe",  unpackexecutable:"jcr6_extract.exe", packcommand:"jcr6_add %s",       unpackcommand:"jcr6_extract %s"}
-	winpacks["7z" ] = { packexecutable:"7z.exe",        unpackexecutable:"7z.exe",           packcommand:"7z a %s *",         unpackcommand:"7z e %s *"}
-	winpacks["zip"] = { packexecutable:"zip.exe",       unpackexecutable:"unzip.exe",        packcommand:"zip -9 -r %s *",    unpackcommand:"unzip %s" }
-	winpacks["tar"] = { packexecutable:"7z.exe",        unpackexecutable:"jcr6_extract.exe", packcommand:"7z a -ttar %s *",   unpackcommand:"jcr6_extract %s"}
-	winpacks["arj"] = { packexecutable:"arj32.exe",     unpackexecutable:"7z.exe",           packcommand:"arj32 a -r %s",     unpackcommand:"7z e %s *"}
+	winpacks["jcr"] = tpack{ packexecutable:"jcr6_add.exe",  unpackexecutable:"jcr6_extract.exe", packcommand:"jcr6_add %s",       unpackcommand:"jcr6_extract %s"}
+	winpacks["7z" ] = tpack{ packexecutable:"7z.exe",        unpackexecutable:"7z.exe",           packcommand:"7z a %s *",         unpackcommand:"7z e %s *"}
+	winpacks["zip"] = tpack{ packexecutable:"zip.exe",       unpackexecutable:"unzip.exe",        packcommand:"zip -9 -r %s *",    unpackcommand:"unzip %s" }
+	winpacks["tar"] = tpack{ packexecutable:"7z.exe",        unpackexecutable:"jcr6_extract.exe", packcommand:"7z a -ttar %s *",   unpackcommand:"jcr6_extract %s"}
+	winpacks["arj"] = tpack{ packexecutable:"arj32.exe",     unpackexecutable:"7z.exe",           packcommand:"arj32 a -r %s",     unpackcommand:"7z e %s *"}
 	
 	// lha
-	winpacks["lha"] = { packexecutable:"lha.exe", unpackexecutable:"lha.exe",      packcommand:"lha a %s *",      unpackcommand:"lha x %s *"}
+	winpacks["lha"] = tpack{ packexecutable:"lha.exe", unpackexecutable:"lha.exe",      packcommand:"lha a %s *",      unpackcommand:"lha x %s *"}
 	winpacks["lzh"] = winpacks["lha"]
 	
 mkl.Version("JCR6 CLI (GO) - packtools_windows.go","17.12.08")
@@ -64,19 +68,19 @@ mkl.Lic    ("JCR6 CLI (GO) - packtools_windows.go","GNU General Public License 3
 }
 
 func d(file string) bool{
-	return qstr.Left(file,1)="/" || qstr.Mid(file,2)==":"
+	return qstr.Left(file,1)=="/" || qstr.Mid(file,2,1)==":"
 }
 
 
 func checkpack(act,packer string){
 	var ok bool
-	var wp tpack
-	var a:="pack"
+	// var wp tpack
+	a:="pack"
 	var want string
 	if act=="u"{
-		a:="unpack"
+		a="unpack"
 	}
-	if wp,ok=winpacks[packer];!ok{
+	if _,ok=winpacks[packer];!ok{
 		fmt.Println("ERROR!\nI don't have the required datato "+a+" files of the "+packer+".\nTry one of these:")
 		for n,_:=range(winpacks){
 			fmt.Println("= "+n)
@@ -88,12 +92,40 @@ func checkpack(act,packer string){
 	} else {
 		want = winpacks[packer].packexecutable
 	}
-	if _,e := exec.LookPath(me+"/"+want) {
+	if _,e := exec.LookPath(me+"/"+want);e!=nil {
 		fmt.Println("ERROR!\nIn order to "+a+" anyfile of the "+packer+"type I need the program "+want+" to be present in the same folder as where the jcr6 tools are installed which is currently not the case")
 		os.Exit(2)
 	}
 }
 
-func pack(packer,tofile string){
+func isd(file string) bool{
+	ret:=qstr.Left(file,1)=="/"
+	ret=ret || qstr.Mid(file,2,1)==":"
+	ret=ret || qstr.Left(file,1)=="\\"
+	return ret
 }
+
+
+func pack(packer,tofile string){
+		var eline string
+	if want,ok:=winpacks[packer];!ok{
+		fmt.Println("PACK: FATAL INTERNAL ERROR!")
+		os.Exit(255)
+	} else {
+		eline=want.packcommand
+	}
+	shell.Shell(fmt.Sprintf(eline,"\""+tofile+"\""))
+}
+
+func unpack(packer,fromfile string){
+	var eline string
+	if want,ok:=winpacks[packer];!ok{
+		fmt.Println("UNPACK: FATAL INTERNAL ERROR!")
+		os.Exit(255)
+	} else {
+		eline=want.unpackcommand
+	}
+	shell.Shell(fmt.Sprintf(eline,"\""+fromfile+"\"")) 
+}
+
 
