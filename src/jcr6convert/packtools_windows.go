@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.08
+Version: 17.12.30
 */
 package main
 
@@ -63,7 +63,7 @@ func initpack(){
 	winpacks["lha"] = tpack{ packexecutable:"lha.exe", unpackexecutable:"lha.exe",      packcommand:"lha a %s *",      unpackcommand:"lha x %s *"}
 	winpacks["lzh"] = winpacks["lha"]
 	
-mkl.Version("JCR6 CLI (GO) - packtools_windows.go","17.12.08")
+mkl.Version("JCR6 CLI (GO) - packtools_windows.go","17.12.30")
 mkl.Lic    ("JCR6 CLI (GO) - packtools_windows.go","GNU General Public License 3")
 }
 

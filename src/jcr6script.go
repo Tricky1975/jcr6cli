@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.15
+Version: 17.12.30
 */
 package main
 
@@ -297,7 +297,7 @@ func init(){
 		                                         {"GenVer",API_GenVer},
 		                                       },0 )
 	lua.AtPanic(sl,PANIEK)
-mkl.Version("JCR6 CLI (GO) - jcr6script.go","17.12.15")
+mkl.Version("JCR6 CLI (GO) - jcr6script.go","17.12.30")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6script.go","GNU General Public License 3")
 }
 
