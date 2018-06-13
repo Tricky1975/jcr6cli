@@ -4,7 +4,7 @@
 	
 	
 	
-	(c) Jeroen P. Broks, 2017, All rights reserved
+	(c) Jeroen P. Broks, 2017, 2018, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.08
+Version: 18.04.13
 */
 package main
 
@@ -44,7 +44,7 @@ const A_Cyan   =ansistring.A_Cyan
 const A_Yellow =ansistring.A_Yellow
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6list.go","17.12.08")
+mkl.Version("JCR6 CLI (GO) - jcr6list.go","18.04.13")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6list.go","GNU General Public License 3")
 }
 
@@ -72,12 +72,15 @@ func main(){
 		fmt.Println(v)
 		fmt.Print("\n")
 	}
-	// Main files analysis
+	// Main files analysis (will also count storage methods used)
 	maincodes := make(map[string] string)
 	maintypes := make(map[string] string)
 	maincount := make(map[string] int)
+	strgcount := make(map[string] int)
+	strgorder := []string{}
 	jent:=jcr6main.EntryList(jcr)
 	for i:=0;i<len(jent);i++{
+		st:=jcr6main.Entry(jcr,jent[i]).Storage
 		mf:=jcr6main.Entry(jcr,jent[i]).Mainfile
 		c:=qstr.Left(qstr.StripAll(mf)+"________",8)
 		maincodes [mf] = c
@@ -86,12 +89,19 @@ func main(){
 			maincount[mf]=0
 		}
 		maincount[mf]++
+		if _,ok:=strgcount[st];!ok{
+		   strgcount[st]=0
+	   }
+	   strgcount[st]++
 	}
 	mainorder := make([]string,len(maincodes))
 	mci := 0
 	for k,_ := range maincodes{
 		mainorder[mci]=k
 		mci++
+	}
+	for k,_ := range strgcount{
+		strgorder = append(strgorder,k)
 	}
 	sort.Strings(mainorder)
 	fmt.Println(ansistring.SCol("MainCode  Type                  Entries  Main File",A_Cyan,0))
@@ -114,6 +124,20 @@ func main(){
 		fmt.Println(ansistring.SCol(" main file\n",A_Yellow,0))
 	} else {
 		fmt.Println(ansistring.SCol(" main files\n",A_Yellow,0))
+	}
+	// Storage overview
+	sort.Strings(strgorder)
+	fmt.Println(ansistring.SCol("Storage Used",A_Cyan,0   ))  
+	fmt.Println(ansistring.SCol("======= ====",A_Yellow,0))
+	for i:=0;i<len(strgorder);i++{
+		fmt.Print  (ansistring.SCol(qstr.Left(strgorder[i]+"          ",7),1,0)," ")
+		fmt.Println(ansistring.SCol(qstr.Right(fmt.Sprintf("    %d",strgcount[strgorder[i]]),4),2,0))
+	}
+	fmt.Print(ansistring.SCol(fmt.Sprintf("\t%d ",len(strgorder)),A_Cyan,0))
+	if len(strgorder)==1 {
+		fmt.Print(ansistring.SCol("storage/compression algorithm was used in this resource\n\n",A_Yellow,0))
+	} else {
+		fmt.Print(ansistring.SCol("storage/compression algorithms were used in this resource\n\n",A_Yellow,0))
 	}
 	// Entry list
 	fmt.Println(ansistring.SCol(" Real Size Comp. Size Ratio   Offset MainCode    Storage Entry",A_Cyan,0))
