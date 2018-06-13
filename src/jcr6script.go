@@ -217,6 +217,22 @@ func API_GenVer(l * lua.State) int {
 	return 1
 }
 
+func API_Input(l * lua.State) int {
+    fmt.Print(lua.OptString(l,1,""))
+    //text2 := ""
+    //fmt.Scanln(text2)
+    //fmt.Println(text2)
+    
+    reader := bufio.NewReader(os.Stdin)
+    //fmt.Print("Enter text: ")
+    text, _ := reader.ReadString('\n')
+    //fmt.Println(text)
+    text = qstr.MyTrim(text)
+    l.PushString(text)
+    return 1
+}
+
+
 func SysError(l *lua.State) int {
 	ERR(lua.CheckString(l,1),!l.IsNoneOrNil(2))
 	return 0
