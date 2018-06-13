@@ -4,7 +4,7 @@
 	
 	
 	
-	(c) Jeroen P. Broks, 2017, All rights reserved
+	(c) Jeroen P. Broks, 2017, 2018, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,12 +20,12 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.16
+Version: 18.06.13
 */
 package main
 
 import(
-	// Go 
+	// Go
 	"os"
 	"fmt"
 	"log"
@@ -89,7 +89,7 @@ func plural(number int,nounsingle,nounplural string) string{
 }
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6add.go","17.12.16")
+mkl.Version("JCR6 CLI (GO) - jcr6add.go","18.06.13")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6add.go","GNU General Public License 3")
 }
 
@@ -218,7 +218,7 @@ func ParseJIF(JIF,inputdir string) tAddMe {
 	return r
 }
 
-func ParseList(listfile,idir,cm,fc string,doj bool) tAddMe {
+func ParseList(listfile,idir,cm,fc string,doj bool,author,notes string) tAddMe {
 	fmt.Println(ansistring.SCol("Reading file list",Cyan,0))
 	r:=CreateAddMe(idir)
 	r.destroyoriginal=doj
@@ -245,19 +245,21 @@ func ParseList(listfile,idir,cm,fc string,doj bool) tAddMe {
 				r.NewFileRec(sfile)
 				r.fa("!__TARGET",tfile)
 				r.fa("!__STORAGE",cm)
+				r.fa("!__AUTHOR",author)
+				r.fa("!__NOTES",notes)
 			}
 		}
 	}
 	return r
 }
 
-func TreeDir(idir,cm,fc,pre,suf string, doj bool) tAddMe {
+func TreeDir(idir,cm,fc,pre,suf string, doj bool,author,notes string) tAddMe {
 	fmt.Println(ansistring.SCol("Analysing dir: "+idir,Cyan,0))
 	r:=CreateAddMe(idir)
 	r.destroyoriginal=doj
 	r.fatstorage=fc
 	t:=tree.GetTree(idir,false)
-	for _,fil:=range(t){		
+	for _,fil:=range(t){
 		ok:=true
 		if pre!="" { ok = ok && qstr.Left (fil,len(pre))==pre }
 		if suf!="" { ok = ok && qstr.Right(fil,len(suf))==suf }
@@ -267,6 +269,8 @@ func TreeDir(idir,cm,fc,pre,suf string, doj bool) tAddMe {
 			r.NewFileRec(sfile)
 			r.fa("!__TARGET",tfile)
 			r.fa("!__STORAGE",cm)
+			r.fa("!__AUTHOR",author)
+			r.fa("!__NOTES",notes)
 		}
 	}
 	return r
@@ -288,6 +292,8 @@ func main(){
 	fl_ansi:=flag.String("ansi",ansiyes,"Allow using ansi in output.")
 	fl_nmrg:=flag.Bool ("nm",false,"When set the addition routine will not merge files recognized by the JCR6 detector as directories")
 	fl_kill:=flag.Bool ("doj",false,"When set the system will always create a new JCR6 file and destroy the old one if it exists")
+	fl_author:=flag.String("author","","Define the \"Author\" field in all files added (please note, this flag will be ignored when you use jif files)")
+	fl_notes:=flag.String("notes","","Define the \"Notes\" field in all files added (please note, this flag will be ignored when you use jif files)")
 	//fl_yes :=flag.Bool ("y",false,"When set all existing files will be overwritten")
 	flag.Parse()
 	//autoyes=*fl_yes
@@ -310,7 +316,7 @@ func main(){
 		ansistring.ANSI_Use=false
 	} else if *fl_ansi!="" {
 		log.Print(ansistring.SCol("ERROR! ",Red,Blink)+ansistring.SCol("Invalid value for ansi. Only 'yes' or 'no' would do!",Yellow,Bright))
-	}	
+	}
 	wjcr:=nonflags[0]
 	updatefile:=wjcr
 	// Show parsing results
@@ -338,7 +344,7 @@ func main(){
 	if *fl_jif!="" {
 		fmt.Print(ansistring.SCol("Instruction file:   ",Yellow,0))
 		fmt.Println(ansistring.SCol(*fl_jif,Cyan,0))
-		
+
 	} else if *fl_list!="" {
 		fmt.Print(ansistring.SCol("List:               ",Yellow,0))
 		fmt.Println(ansistring.SCol(*fl_list,Cyan,0))
@@ -348,27 +354,41 @@ func main(){
 		fmt.Println(ansistring.SCol(*fl_encm,Cyan,0))
 		fmt.Print(ansistring.SCol("Filetab compression:",Yellow,0))
 		fmt.Println(ansistring.SCol(*fl_ftcm,Cyan,0))
+		if *fl_author!=""{
+			fmt.Print(ansistring.SCol("Author:             ",Yellow,0))
+			fmt.Println(ansistring.SCol(*fl_author,Cyan,0))
+		}
+		if *fl_notes!=""{
+			fmt.Print(ansistring.SCol("Notes:              ",Yellow,0))
+			if len(*fl_notes)>20 {
+			  r:=strings.Replace(*fl_notes,"\n","\\n",-1)
+				r=r[:20]
+				fmt.Println(ansistring.SCol(r,Cyan,0))
+			} else {
+			  fmt.Println(ansistring.SCol(strings.Replace(*fl_notes,"\n","\\n",-1),Cyan,0))
+			}
+		}
 		fmt.Print(ansistring.SCol("Merging             ",Yellow,0))
 		if *fl_nmrg { fmt.Println(cno) } else {fmt.Println(cyes)}
 	}
 	fmt.Print("\n\n")
-	
+
 	// Let's get a clear view on which files to add and which not!
 	list:=tAddMe{}
 	if *fl_jif!="" { // JIF instruction file, this overrides ALL other settings, although it will use the directory set with -i as base dir unless a full pathname is present in the instruction file
 		list = ParseJIF(*fl_jif,*fl_idir)
 	} else if *fl_list!="" {
-		list = ParseList(*fl_list,*fl_idir,*fl_encm,*fl_ftcm,*fl_kill)
+		list = ParseList(*fl_list,*fl_idir,*fl_encm,*fl_ftcm,*fl_kill,*fl_author,*fl_notes)
 	} else {
-		list = TreeDir(*fl_idir,*fl_encm,*fl_ftcm,*fl_pref,*fl_suff,*fl_kill)
+		list = TreeDir(*fl_idir,*fl_encm,*fl_ftcm,*fl_pref,*fl_suff,*fl_kill,*fl_author,*fl_notes)
 	}
 	if debuglist {fmt.Println(list)} // debug line to keep Go from WHINING during development!
-	
+
 	if len(list.files)==0 && len(list.comments)==0 && len(list.impkind)==0 { ERR("There seems to be nothing I can do!") }
-	
+
 	// Create file
 	jc:=jcr6main.JCR_Create(updatefile,list.fatstorage)
-	
+
 	// Configuration
 	for k,v:=range list.config {
 		tk:=k[1:]
@@ -376,7 +396,7 @@ func main(){
 			case "!": // Ignore.... Nothing to do here, "!" is reserved for system declarations only
 			case "$": jc.ConfigString(tk,v)
 			case "&": jc.ConfigBool(tk,strings.ToUpper(v)=="TRUE")
-			case "%": 
+			case "%":
 				i,err:=strconv.ParseInt(v,32,32)
 				if err!=nil { ERR("Config nummeric error while converting config var \""+k+"\": "+err.Error()); i=0}
 				jc.ConfigInt(tk,int32(i))
@@ -384,17 +404,17 @@ func main(){
 				ERR("Unknown type for config variable "+k)
 		}
 	}
-	
+
 	// Update
 	// This comes later!
-	
+
 	// Add comments
 	fmt.Println(ansistring.SCol("Adding comments",Cyan,0))
 	for k,v :=range list.comments { jc.AddComment(k,v); fmt.Println(ansistring.SCol("= ",Red,Bright)+ansistring.SCol(k,Yellow,0)) }
-	
+
 	// Add dependencies
 	fmt.Println(ansistring.SCol("Adding dependency requests",Cyan,0))
-	for f,knd :=range list.impkind { 
+	for f,knd :=range list.impkind {
 		sig:=list.impsig[f]
 		fmt.Println(ansistring.SCol("= ",Red,Bright)+ansistring.SCol(knd,Blue,Bright)+" "+ansistring.SCol(f,Yellow,0)+" "+ansistring.SCol(sig,Magenta,0))
 		switch knd {
@@ -403,11 +423,11 @@ func main(){
 			default:        ERR("Unknown dependency type: "+knd)
 		}
 	}
-	
+
 	// Add entries
 	fmt.Println(ansistring.SCol("Adding raw files",Cyan,0))
 	for _,entry := range list.files {
-		//originalfile,entryname,algorithm,author,notes 
+		//originalfile,entryname,algorithm,author,notes
 		if _,ok:=entry["!__AUTHOR"];!ok{ entry["!__AUTHOR"]=""}
 		if _,ok:=entry["!__NOTES"] ;!ok{ entry["!__NOTES"] =""}
 		if _,ok:=entry["!__FROMFILE"];!ok{ ERR(fmt.Sprintf("INTERNAL ERROR! Please report! No source file received!\n%s",entry),true) }
@@ -465,7 +485,7 @@ func main(){
 			}
 		}
 	}
-	
+
 	// Alias requests
 	fmt.Println(ansistring.SCol("Processing aliases",Cyan,0))
 	for alias,from:=range list.alias{
@@ -488,16 +508,16 @@ func main(){
 			counterrors++
 		}
 	}
-	
+
 	// Closure
 	fmt.Println(ansistring.SCol("Finalizing JCR6 file",Cyan,0))
 	jc.Close()
-	
+
 	// Replace files and clean temp files in case of update
 	// This comes later
 	if update { fmt.Print("I'll work with "+updatefile+" later") } // not used error prevention!
 
-	
+
 	// Last
 	fmt.Println("\n")
 	if counterrors>0 { fmt.Println(ansistring.SCol("\t"+plural(counterrors,"error","errors"),Red,0)+" "+ansistring.SCol("occurred during the entire process!",Yellow,0)) }
