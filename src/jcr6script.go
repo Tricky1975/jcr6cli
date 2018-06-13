@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.30
+Version: 18.04.13
 */
 package main
 
@@ -292,6 +292,8 @@ func savedvars() (string,string,string){
 	script+="\treturn ret\nend\n"
 	return script,sfile,cfile
 }
+
+
 
 
 // Main
