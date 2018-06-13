@@ -312,9 +312,10 @@ func init(){
 		                                         {"filetype",API_FileType},
 		                                         {"JCR_GetDir",API_GetDir},
 		                                         {"GenVer",API_GenVer},
+		                                         {"Input",API_Input},
 		                                       },0 )
 	lua.AtPanic(sl,PANIEK)
-mkl.Version("JCR6 CLI (GO) - jcr6script.go","17.12.30")
+mkl.Version("JCR6 CLI (GO) - jcr6script.go","18.04.13")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6script.go","GNU General Public License 3")
 }
 
