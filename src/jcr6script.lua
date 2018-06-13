@@ -4,7 +4,7 @@
 	
 	
 	
-	(c) Jeroen P. Broks, 2017, All rights reserved
+	(c) Jeroen P. Broks, 2017, 2018, All rights reserved
 	
 		This program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 17.12.15
+Version: 18.04.13
 ]]
 
 
@@ -128,7 +128,7 @@ function mkl.lic(a,b)
 	JCRMKL("LIC",a,b)
 end
 
-mkl.version("JCR6 CLI (GO) - jcr6script.lua","17.12.15")
+mkl.version("JCR6 CLI (GO) - jcr6script.lua","18.04.13")
 mkl.lic    ("JCR6 CLI (GO) - jcr6script.lua","GNU General Public License 3")
 
 
@@ -263,7 +263,7 @@ else
 	Console.Write('Serialize("'..vname..'",<'..type(vvalue)..'>,'..(tabs or 0)..')')
 endif	
 ]]	
-local letsgo = __serialize_work[type(vvalue)] or function(vvalue) Sys.Error("Unknown type. Cannot serialize","Variable,"..vname..";Type Value,"..type(vvalue)) end
+local letsgo = __serialize_work[type(vvalue)] or function(vvalue) error("Unknown type. Cannot serialize","Variable,"..vname..";Type Value,"..type(vvalue)) end
 local i
 for i=1,tabs or 0 do ret = ret .."       " end
 ret = ret .. vname .." = "..letsgo(vvalue) 
