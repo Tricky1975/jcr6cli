@@ -20,7 +20,7 @@
 		
 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
 	to the project the exceptions are needed for.
-Version: 18.04.13
+Version: 18.11.02
 ]]
 
 
@@ -72,7 +72,7 @@ function AddRequire(dependency,sig)
 end
 
 function AddComment(name,cmt)
-	Output(name..":"..cmt)
+	Output("COMMENT:"..name..","..cmt)
 end
 
 function JCR6MergeSkipPrefix(prefix)
@@ -128,7 +128,7 @@ function mkl.lic(a,b)
 	JCRMKL("LIC",a,b)
 end
 
-mkl.version("JCR6 CLI (GO) - jcr6script.lua","18.04.13")
+mkl.version("JCR6 CLI (GO) - jcr6script.lua","18.11.02")
 mkl.lic    ("JCR6 CLI (GO) - jcr6script.lua","GNU General Public License 3")
 
 
