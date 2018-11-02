@@ -1,3 +1,27 @@
+// License Information:
+// 	JCR6CLI
+// 	Add files to a JCR6 resource
+// 	
+// 	
+// 	
+// 	(c) Jeroen P. Broks, 2017, 2018, All rights reserved
+// 	
+// 		This program is free software: you can redistribute it and/or modify
+// 		it under the terms of the GNU General Public License as published by
+// 		the Free Software Foundation, either version 3 of the License, or
+// 		(at your option) any later version.
+// 		
+// 		This program is distributed in the hope that it will be useful,
+// 		but WITHOUT ANY WARRANTY; without even the implied warranty of
+// 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// 		GNU General Public License for more details.
+// 		You should have received a copy of the GNU General Public License
+// 		along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// 		
+// 	Exceptions to the standard GNU license are available with Jeroen's written permission given prior 
+// 	to the project the exceptions are needed for.
+// Version: 18.11.02
+// End License Information
 /*
 	JCR6CLI
 	Add files to a JCR6 resource
@@ -89,7 +113,7 @@ func plural(number int,nounsingle,nounplural string) string{
 }
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6add.go","18.06.13")
+mkl.Version("JCR6 CLI (GO) - jcr6add.go","18.11.02")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6add.go","GNU General Public License 3")
 }
 
@@ -171,7 +195,7 @@ func ParseJIF(JIF,inputdir string) tAddMe {
 						if pcmt<1 {
 							ERR(fmt.Sprintf("JIF: %s %d: Illegal comment definition",JIF,ln))
 						} else {
-							r.config[prm[:pcmt]] = strings.Replace(prm[pcmt+1:],"\\n","\n",-10)
+							r.comments[prm[:pcmt]] = strings.Replace(prm[pcmt+1:],"\\n","\n",-10)
 						}
 					case "ALIAS","ALIASFROM":
 						r.aliasfrom = prm
