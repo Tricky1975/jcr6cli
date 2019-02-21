@@ -1,26 +1,26 @@
 // License Information:
 // 	JCR6 CLI
 // 	Main program
-// 	
-// 	
-// 	
+//
+//
+//
 // 	(c) Jeroen P. Broks, 2017, 2019
-// 	
+//
 // 		This program is free software: you can redistribute it and/or modify
 // 		it under the terms of the GNU General Public License as published by
 // 		the Free Software Foundation, either version 3 of the License, or
 // 		(at your option) any later version.
-// 		
+//
 // 		This program is distributed in the hope that it will be useful,
 // 		but WITHOUT ANY WARRANTY; without even the implied warranty of
 // 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // 		GNU General Public License for more details.
 // 		You should have received a copy of the GNU General Public License
 // 		along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// 	
+//
 // 	Please note that some references to data like pictures or audio, do not automatically
 // 	fall under this licenses. Mostly this is noted in the respective files.
-// 		
+//
 // Version: 19.02.21
 // End License Information
 
@@ -36,10 +36,10 @@ import(
 	"runtime"
 	//"os/exec"
 	"strings"
-	
+
 	// Internal
 	"jcr6cli/src/imps/ver"
-	
+
 	// Tricky
 	"trickyunits/mkl"
 	"trickyunits/qstr"
@@ -72,7 +72,7 @@ func main()																						{
 	fmt.Println()
 	//fmt.Println(me,"\t",os.Args[0]) // debug line
 	fmt.Println(ansistring.SCol("JCR6 installed in   ",Yellow,0)+ansistring.SCol(dir,Cyan,0))
-	fmt.Println(ansistring.SCol("JCR6 now running in "+,Yello,0)+ansistring.SCol(runtime.GOOS,Cyan,0)
+	fmt.Println(ansistring.SCol("JCR6 now running in ",Yellow,0)+ansistring.SCol(runtime.GOOS,Cyan,0)
 	fmt.Println()
 	if len(os.Args)>1 {
 		a:=[]string{}
@@ -86,7 +86,7 @@ func main()																						{
 	fmt.Println()
 	fmt.Println(ansistring.SCol("Giving up a command without any parameters will show you the help page of that specific command",Magenta,0))
 	fmt.Println()
-	fmt.Println(ansistring.SCol("Available commands",Cyan,0))	
+	fmt.Println(ansistring.SCol("Available commands",Cyan,0))
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
 		log.Fatal(err)
