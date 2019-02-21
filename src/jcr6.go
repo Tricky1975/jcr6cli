@@ -68,9 +68,9 @@ func main()																						{
 	fmt.Println(ansistring.SCol("Coded by: Jeroen P. Broks",Cyan,0))
 	fmt.Println(ansistring.SCol("(c) Jeroen P. Broks 2016-2017",Magenta,0))
 	fmt.Println()
-	fmt.Println(me,"\t",os.Args[0]) // debug line
-	fmt.Println("JCR6 installed in "+dir)
-	fmt.Println("JCR6 now running in "+runtime.GOOS)
+	//fmt.Println(me,"\t",os.Args[0]) // debug line
+	fmt.Println(ansistring.SCol("JCR6 installed in   ",Yellow,0)+ansistring.SCol(dir,Cyan,0))
+	fmt.Println(ansistring.SCol("JCR6 now running in "+,Yello,0)+ansistring.SCol(runtime.GOOS,Cyan,0)
 	fmt.Println()
 	if len(os.Args)>1 {
 		a:=[]string{}
