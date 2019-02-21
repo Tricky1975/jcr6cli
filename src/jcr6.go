@@ -72,7 +72,7 @@ func main()																						{
 	fmt.Println()
 	//fmt.Println(me,"\t",os.Args[0]) // debug line
 	fmt.Println(ansistring.SCol("JCR6 installed in   ",Yellow,0)+ansistring.SCol(dir,Cyan,0))
-	fmt.Println(ansistring.SCol("JCR6 now running in ",Yellow,0)+ansistring.SCol(runtime.GOOS,Cyan,0)
+	fmt.Println(ansistring.SCol("JCR6 now running in ",Yellow,0)+ansistring.SCol(runtime.GOOS,Cyan,0))
 	fmt.Println()
 	if len(os.Args)>1 {
 		a:=[]string{}
