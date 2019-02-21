@@ -1,3 +1,5 @@
+![](https://avatars3.githubusercontent.com/u/47812464?s=200&v=4)
+
 # JCR6 CLI
 
 These are the JCR6 CLI in Go.
