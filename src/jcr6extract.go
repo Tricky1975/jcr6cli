@@ -1,3 +1,29 @@
+// License Information:
+// JCR6 CLI
+// Extract
+// 
+// 
+// 
+// (c) Jeroen P. Broks, 
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// Please note that some references to data like pictures or audio, do not automatically
+// fall under this licenses. Mostly this is noted in the respective files.
+// 
+// Version: 19.03.20
+// End License Information
+
 /*
 	JCR6CLI
 	Extractor
@@ -56,7 +82,7 @@ const Blink  = ansistring.A_Blink
 const Bright = ansistring.A_Bright
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6extract.go","17.12.16")
+mkl.Version("JCR6 CLI (GO) - jcr6extract.go","19.03.20")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6extract.go","GNU General Public License 3")
 }
 
@@ -122,7 +148,7 @@ func main() {
 	fl_pref:=flag.String("pr","","Only extract files prefixed with the given value.")
 	fl_suff:=flag.String("sf","","Only extract files suffixed with the given value.")
 	fl_list:=flag.String("ls","","Use a text file as a list of all files.\n\tUsing this flag will ignore -pr and -sf")
-	fl_ansi:=flag.String("ansi",ansiyes,"Allow using ansi in output.")
+	fl_ansi:=flag.String("ansi",ansiyes,"Allow using ansi in output. (This flag has been deprecated. Use JCR6 config ansi=yes/no in stead)")
 	fl_yes :=flag.Bool ("y",false,"When set all existing files will be overwritten")
 	flag.Parse()
 	autoyes=*fl_yes

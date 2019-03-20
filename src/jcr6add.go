@@ -1,28 +1,29 @@
 // License Information:
-// 	JCR6CLI
-// 	Add files to a JCR6 resource
-// 	
-// 	
-// 	
-// 	(c) Jeroen P. Broks, 2017, 2018, 2019
-// 	
-// 		This program is free software: you can redistribute it and/or modify
-// 		it under the terms of the GNU General Public License as published by
-// 		the Free Software Foundation, either version 3 of the License, or
-// 		(at your option) any later version.
-// 		
-// 		This program is distributed in the hope that it will be useful,
-// 		but WITHOUT ANY WARRANTY; without even the implied warranty of
-// 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// 		GNU General Public License for more details.
-// 		You should have received a copy of the GNU General Public License
-// 		along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// 	
-// 	Please note that some references to data like pictures or audio, do not automatically
-// 	fall under this licenses. Mostly this is noted in the respective files.
-// 		
-// Version: 19.02.28
+// JCR6 CLI
+// add
+// 
+// 
+// 
+// (c) Jeroen P. Broks, 
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// Please note that some references to data like pictures or audio, do not automatically
+// fall under this licenses. Mostly this is noted in the respective files.
+// 
+// Version: 19.03.20
 // End License Information
+
 
 package main
 
@@ -91,7 +92,7 @@ func plural(number int,nounsingle,nounplural string) string{
 }
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6add.go","19.02.28")
+mkl.Version("JCR6 CLI (GO) - jcr6add.go","19.03.20")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6add.go","GNU General Public License 3")
 }
 
@@ -291,7 +292,7 @@ func main(){
 	fl_jif :=flag.String("jif", ""   ,"Use an instruction file to build data from.\n\tUsing this flag will ignore -pr, -sf, -cm, -fc and -ls")
 	fl_encm:=flag.String("cm" ,"lzma","Use one of the supported compression methods for packing the entries.\n\tYou can also use the method 'Store' for no compression, and 'Brute' to make JCR6 try all of them to see which is best.")
 	fl_ftcm:=flag.String("fc" ,"lzma", "Use one of the supported compression methods for packing the file table.\n\tYou can also use the method 'Store' for no compression, and 'Brute' to make JCR6 try all of them to see which is best.")
-	fl_ansi:=flag.String("ansi",ansiyes,"Allow using ansi in output.")
+	fl_ansi:=flag.String("ansi",ansiyes,"Allow using ansi in output. (This flag has been deprecated. Use JCR6 config ansi=yes/no in stead)")
 	fl_nmrg:=flag.Bool ("nm",false,"When set the addition routine will not merge files recognized by the JCR6 detector as directories")
 	fl_kill:=flag.Bool ("doj",false,"When set the system will always create a new JCR6 file and destroy the old one if it exists")
 	fl_author:=flag.String("author","","Define the \"Author\" field in all files added (please note, this flag will be ignored when you use jif files)")
