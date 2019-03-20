@@ -1,3 +1,29 @@
+// License Information:
+// JCR6 CLI
+// Version overview
+// 
+// 
+// 
+// (c) Jeroen P. Broks, 
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// Please note that some references to data like pictures or audio, do not automatically
+// fall under this licenses. Mostly this is noted in the respective files.
+// 
+// Version: 19.03.20
+// End License Information
+
 /*
 	JCR6CLI
 	Version information
@@ -50,19 +76,23 @@ const Magenta = ansistring.A_Magenta
 
 
 func init(){
-mkl.Version("JCR6 CLI (GO) - jcr6version.go","17.12.16")
+mkl.Version("JCR6 CLI (GO) - jcr6version.go","19.03.20")
 mkl.Lic    ("JCR6 CLI (GO) - jcr6version.go","GNU General Public License 3")
 }
 
 func main() {
 	ver.CHVER()
 	ext:=""
-	npext:=""
+	//npext:=""
 	teken:="*"
 	full:=false
 	param:="VERSION"
 	if len(os.Args)>1 { if os.Args[1]=="FULL" { full=true; param="FULLVERSION" }}
-	if runtime.GOOS=="windows" { ext=".exe"; npext="exe"; teken="-" }
+	if runtime.GOOS=="windows" { 
+		ext=".exe"; 
+		//npext="exe"; 
+		teken="-" 
+	}
 	exe,_:=os.Executable()
 	dir:=path.Dir(exe)
 	files, err := ioutil.ReadDir(dir)
@@ -74,8 +104,8 @@ func main() {
 		//fmt.Println(file.Name()) // debug
 		file:=ifile.Name()
 		//fmt.Println("Looing at: "+file) // debug
-		if qstr.Left(file,4)=="jcr6" && qstr.Right(file,4)!=".lua" && path.Ext(file)==npext {
-			cmd:=exec.Command(dir+"/"+file+ext,teken+param+teken)
+		if qstr.Left(file,4)=="jcr6" && qstr.Right(file,4)!=".lua" && path.Ext(file)==ext {
+			cmd:=exec.Command(dir+"/"+file,teken+param+teken)
 			o,err := cmd.Output()
 			outputstring:=fmt.Sprintf("%s",o)
 			if err!=nil { 
