@@ -23,5 +23,7 @@ rem        go build -o bin/jcr6_delete.exe src/jcr6delete.go
 	   go build -o bin/jcr6_version.exe src/jcr6version.go
 	   echo = Config
 	   go build -o bin/jcr6_config.exe src/jcr6config.go
+           echo = Script
+           go build -o bin/jcr6_script.exe src/jcr6script.go
 
        echo "Ready!"
